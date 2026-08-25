@@ -1,4 +1,4 @@
-module github.com/yourusername/hackthekey
+module github.com/supreamhacker/hackthekey
 
 go 1.21
 
