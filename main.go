@@ -114,19 +114,65 @@ func main() {
 		color.Green("\n[+] Results successfully saved to: %s", outputFile)
 	}
 }
+	// --- MEGA DATABASE (Directly embedded in main.go) ---
+const megaSignaturesJSON = `
+{
+  "platforms": [
+    {"name": "Google Cloud / Firebase", "regex": "AIza[0-9A-Za-z\\-_]{35}", "endpoints": [{"url": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key={KEY}", "method": "POST", "header": "", "prefix": ""}]},
+    {"name": "AWS", "regex": "AKIA[0-9A-Z]{16}", "endpoints": [{"url": "https://sts.amazonaws.com/?Action=GetCallerIdentity&Version=2011-06-15", "method": "GET", "header": "Authorization", "prefix": "AWS4"}]},
+    {"name": "Stripe", "regex": "sk_live_[0-9a-zA-Z]{24,34}", "endpoints": [{"url": "https://api.stripe.com/v1/charges", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "GitHub", "regex": "ghp_[0-9a-zA-Z]{36}", "endpoints": [{"url": "https://api.github.com/user", "method": "GET", "header": "Authorization", "prefix": "token "}]},
+    {"name": "OpenAI", "regex": "sk-[a-zA-Z0-9]{48}", "endpoints": [{"url": "https://api.openai.com/v1/models", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Slack", "regex": "xox[baprs]-[0-9a-zA-Z\\-]{10,250}", "endpoints": [{"url": "https://slack.com/api/auth.test", "method": "POST", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Twilio", "regex": "SK[0-9a-fA-F]{32}", "endpoints": [{"url": "https://api.twilio.com/2010-04-01/Accounts.json", "method": "GET", "header": "Authorization", "prefix": "Basic "}]},
+    {"name": "SendGrid", "regex": "SG\\.[0-9A-Za-z\\-_]{22}\\.[0-9A-Za-z\\-_]{43}", "endpoints": [{"url": "https://api.sendgrid.com/v3/user/profile", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Telegram", "regex": "[0-9]{8,10}:[0-9A-Za-z_-]{35}", "endpoints": [{"url": "https://api.telegram.org/bot{KEY}/getMe", "method": "GET", "header": "", "prefix": ""}]},
+    {"name": "DigitalOcean", "regex": "dop_v1_[0-9a-f]{64}", "endpoints": [{"url": "https://api.digitalocean.com/v2/account", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Shopify", "regex": "shpat_[a-fA-F0-9]{32}", "endpoints": [{"url": "https://admin.shopify.com/services/shop", "method": "GET", "header": "X-Shopify-Access-Token", "prefix": ""}]},
+    {"name": "GitLab", "regex": "glpat-[0-9a-zA-Z\\-_]{20}", "endpoints": [{"url": "https://gitlab.com/api/v4/user", "method": "GET", "header": "PRIVATE-TOKEN", "prefix": ""}]},
+    {"name": "Discord", "regex": "[a-zA-Z0-9_-]{59,68}", "endpoints": [{"url": "https://discord.com/api/v10/users/@me", "method": "GET", "header": "Authorization", "prefix": "Bot "}]},
+    {"name": "Cloudflare", "regex": "[a-zA-Z0-9]{37}", "endpoints": [{"url": "https://api.cloudflare.com/client/v4/user/tokens/verify", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Mailgun", "regex": "key-[0-9a-zA-Z]{32}", "endpoints": [{"url": "https://api.mailgun.net/v3/domains", "method": "GET", "header": "Authorization", "prefix": "Basic "}]},
+    {"name": "PayPal", "regex": "Access-Token\\.[0-9a-zA-Z\\-_]{40,100}", "endpoints": [{"url": "https://api-m.paypal.com/v1/identity/oauth2/userinfo?schema=paypalv1.1", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Razorpay", "regex": "rzp_(live|test)_[0-9a-zA-Z]{14,20}", "endpoints": [{"url": "https://api.razorpay.com/v1/payments", "method": "GET", "header": "Authorization", "prefix": "Basic "}]},
+    {"name": "Heroku", "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", "endpoints": [{"url": "https://api.heroku.com/account", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Vercel", "regex": "[a-zA-Z0-9]{24}", "endpoints": [{"url": "https://api.vercel.com/v2/user", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Netlify", "regex": "[a-zA-Z0-9_-]{40,50}", "endpoints": [{"url": "https://api.netlify.com/api/v1/user", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Anthropic", "regex": "sk-ant-[0-9a-zA-Z\\-_]{40,100}", "endpoints": [{"url": "https://api.anthropic.com/v1/messages", "method": "POST", "header": "x-api-key", "prefix": ""}]},
+    {"name": "HuggingFace", "regex": "hf_[0-9a-zA-Z]{34}", "endpoints": [{"url": "https://huggingface.co/api/whoami-v2", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Replicate", "regex": "r8_[0-9a-zA-Z]{32}", "endpoints": [{"url": "https://api.replicate.com/v1/predictions", "method": "GET", "header": "Authorization", "prefix": "Token "}]},
+    {"name": "Postmark", "regex": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", "endpoints": [{"url": "https://api.postmarkapp.com/server", "method": "GET", "header": "X-Postmark-Server-Token", "prefix": ""}]},
+    {"name": "Bitbucket", "regex": "[0-9a-zA-Z]{18,20}", "endpoints": [{"url": "https://api.bitbucket.org/2.0/user", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Jira", "regex": "[0-9a-zA-Z]{24}", "endpoints": [{"url": "https://api.atlassian.com/me", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "CircleCI", "regex": "[0-9a-fA-F]{40}", "endpoints": [{"url": "https://circleci.com/api/v1.1/me", "method": "GET", "header": "Circle-Token", "prefix": ""}]},
+    {"name": "DockerHub", "regex": "dckr_pat_[0-9a-zA-Z\\-_]{27}", "endpoints": [{"url": "https://hub.docker.com/v2/user/", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "npm", "regex": "npm_[0-9a-zA-Z]{36}", "endpoints": [{"url": "https://registry.npmjs.org/-/npm/v1/user", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Supabase", "regex": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9[0-9a-zA-Z\\-\\_\\.]+", "endpoints": [{"url": "https://api.supabase.com/v1/projects", "method": "GET", "header": "apikey", "prefix": ""}]},
+    {"name": "PlanetScale", "regex": "pscale_pw_[0-9a-zA-Z\\-_]{43}", "endpoints": [{"url": "https://api.planetscale.com/v1/user", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Twitter/X", "regex": "AAAAAAAAAAAAAAAAAAAAA[0-9a-zA-Z%]{30,50}", "endpoints": [{"url": "https://api.twitter.com/2/users/me", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Meta/Facebook", "regex": "EAACEdEose0cBA[0-9A-Za-z]+", "endpoints": [{"url": "https://graph.facebook.com/me?access_token={KEY}", "method": "GET", "header": "", "prefix": ""}]},
+    {"name": "LinkedIn", "regex": "[0-9a-z]{12,14}", "endpoints": [{"url": "https://api.linkedin.com/v2/me", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Mailchimp", "regex": "[0-9a-f]{32}-us[0-9]{1,2}", "endpoints": [{"url": "https://us1.api.mailchimp.com/3.0/", "method": "GET", "header": "Authorization", "prefix": "Basic "}]},
+    {"name": "Notion", "regex": "secret_[0-9a-zA-Z]{43}", "endpoints": [{"url": "https://api.notion.com/v1/users/me", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Linear", "regex": "lin_api_[0-9a-zA-Z]{40}", "endpoints": [{"url": "https://api.linear.app/graphql", "method": "POST", "header": "Authorization", "prefix": ""}]},
+    {"name": "Airtable", "regex": "pat[0-9a-zA-Z]{15,30}\\.[0-9a-f]{64}", "endpoints": [{"url": "https://api.airtable.com/v0/meta/whoami", "method": "GET", "header": "Authorization", "prefix": "Bearer "}]},
+    {"name": "Datadog", "regex": "[0-9a-f]{32}", "endpoints": [{"url": "https://api.datadoghq.com/api/v1/validate", "method": "GET", "header": "DD-API-KEY", "prefix": ""}]},
+    {"name": "Mapbox", "regex": "pk\\.[0-9a-zA-Z\\-\\_]{60,100}", "endpoints": [{"url": "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token={KEY}", "method": "GET", "header": "", "prefix": ""}]}
+  ]
+}
+`
 
-// --- Load Signatures ---
+// --- Updated Load Signatures Function ---
 func loadSignatures() []Signature {
-	file, err := os.Open("signatures.json")
-	if err == nil {
-		defer file.Close()
-		var config Config
-		if json.NewDecoder(file).Decode(&config) == nil {
-			return config.Platforms
-		}
+	var config Config
+	
+	// Seedha upar diye gaye constant string se JSON parse karein
+	if err := json.Unmarshal([]byte(megaSignaturesJSON), &config); err == nil {
+		return config.Platforms
 	}
-	// Fallback: Hardcoded if JSON not found (omitted for brevity, relies on JSON)
-	color.Yellow("[!] signatures.json not found. Using minimal fallback.")
+	
+	// Extreme Fallback (agar upar wala JSON kharab ho jaye, jo ki nahi hoga)
+	color.Yellow("[!] Failed to load embedded mega database. Using minimal fallback.")
 	return getHardcodedSignatures()
 }
 
