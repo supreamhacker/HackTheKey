@@ -9,6 +9,9 @@ HackTheKey is power full and profficional api key validation tool. Use this tool
 
 `HackTheKey` is a high-performance, concurrent cybersecurity tool written in **Golang**. It identifies, validates, and extracts permissions for exposed API keys across major platforms (AWS, Stripe, GitHub, OpenAI, Slack, etc.) in milliseconds, while featuring smart rate-limiting to avoid IP bans.
 
+<img width="1022" height="632" alt="image" src="https://github.com/user-attachments/assets/2add0ba2-2990-4600-9614-5072914d4146" />
+
+
 ## ✨ Features
 
 - 🔍 **Smart Regex Identification:** Instantly identifies the platform of an API key.
