@@ -25,7 +25,7 @@ HackTheKey is power full and profficional api key validation tool. Use this tool
 If you have Go installed, install `HackTheKey` directly from GitHub with a single command:
 
 ```bash
-go install github.com/supreamhacker/hackthekey@latest
+go install github.com/supreamhacker/HackTheKey@latest
 
 
 Method 2: Build from Source
