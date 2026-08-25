@@ -38,7 +38,7 @@ go build -o hackthekey main.go
 🛠️ Usage
 Scan a Single Key
 
-hackthekey -k "sk_live_1234567890abcdef"
+hackthekey -k "sk_live_1234567890abcdef"  -delay 500ms
 
 
 Scan with Rate Limiting (Avoid IP Bans)
