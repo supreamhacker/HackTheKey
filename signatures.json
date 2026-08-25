@@ -1,0 +1,77 @@
+{
+  "platforms": [
+    {
+      "name": "Stripe",
+      "regex": "^(sk_live_|rk_live_|pk_live_)[a-zA-Z0-9]{24,}",
+      "endpoints": [
+        {"url": "https://api.stripe.com/v1/charges", "method": "GET", "header": "Authorization", "prefix": "Bearer "},
+        {"url": "https://api.stripe.com/v1/balance", "method": "GET", "header": "Authorization", "prefix": "Bearer "}
+      ]
+    },
+    {
+      "name": "GitHub",
+      "regex": "^(ghp_|github_pat_)[a-zA-Z0-9]{36,}",
+      "endpoints": [
+        {"url": "https://api.github.com/user", "method": "GET", "header": "Authorization", "prefix": "token "},
+        {"url": "https://api.github.com/repos", "method": "GET", "header": "Authorization", "prefix": "token "}
+      ]
+    },
+    {
+      "name": "OpenAI",
+      "regex": "^sk-[a-zA-Z0-9]{48}$",
+      "endpoints": [
+        {"url": "https://api.openai.com/v1/models", "method": "GET", "header": "Authorization", "prefix": "Bearer "},
+        {"url": "https://api.openai.com/v1/usage", "method": "GET", "header": "Authorization", "prefix": "Bearer "}
+      ]
+    },
+    {
+      "name": "Slack",
+      "regex": "^xox[baprs]-[a-zA-Z0-9-]+$",
+      "endpoints": [
+        {"url": "https://slack.com/api/auth.test", "method": "POST", "header": "Authorization", "prefix": "Bearer "}
+      ]
+    },
+    {
+      "name": "Telegram",
+      "regex": "^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$",
+      "endpoints": [
+        {"url": "https://api.telegram.org/bot{KEY}/getMe", "method": "GET", "header": "", "prefix": ""}
+      ]
+    },
+    {
+      "name": "Twilio",
+      "regex": "^SK[a-z0-9]{32}$",
+      "endpoints": [
+        {"url": "https://api.twilio.com/2010-04-01/Accounts.json", "method": "GET", "header": "Authorization", "prefix": "Basic "}
+      ]
+    },
+    {
+      "name": "SendGrid",
+      "regex": "^SG\\.[a-zA-Z0-9_-]{22}\\.[a-zA-Z0-9_-]{43}$",
+      "endpoints": [
+        {"url": "https://api.sendgrid.com/v3/user/profile", "method": "GET", "header": "Authorization", "prefix": "Bearer "}
+      ]
+    },
+    {
+      "name": "GitLab",
+      "regex": "^glpat-[a-zA-Z0-9\\-]{20}$",
+      "endpoints": [
+        {"url": "https://gitlab.com/api/v4/user", "method": "GET", "header": "PRIVATE-TOKEN", "prefix": ""}
+      ]
+    },
+    {
+      "name": "Discord",
+      "regex": "^[a-zA-Z0-9_-]{59,68}$",
+      "endpoints": [
+        {"url": "https://discord.com/api/v10/users/@me", "method": "GET", "header": "Authorization", "prefix": "Bot "}
+      ]
+    },
+    {
+      "name": "Cloudflare",
+      "regex": "^[a-zA-Z0-9]{37}$",
+      "endpoints": [
+        {"url": "https://api.cloudflare.com/client/v4/user/tokens/verify", "method": "GET", "header": "Authorization", "prefix": "Bearer "}
+      ]
+    }
+  ]
+}
